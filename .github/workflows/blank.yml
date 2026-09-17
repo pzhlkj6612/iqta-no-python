@@ -17,6 +17,32 @@ jobs:
           - macos-15-intel
           - macos-15
     steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          repository: pzhlkj6612/forked-install-qt-action
+          ref: 53ffb82d713f2bb815e121faa02746918b5da41a
+
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: action/
+
+      - run: |
+          cd action
+          npm ci || npm install
+        shell: bash
+      - run: |
+          cd action
+          npm run build
+      # See the root "action.yml" file.
+      - name: Use local built internal action (hack)
+        run: |
+          sed -i.bak 's|uses: $/action|uses: ./action|' action.yml
+          diff -u action.yml.bak action.yml || true
+          git status --porcelain
+        shell: bash
+
       - name: Remove Python or Python3
         run: |
           set -x
@@ -26,6 +52,6 @@ jobs:
           true
         shell: bash
 
-      - uses: pzhlkj6612/forked-install-qt-action@53ffb82d713f2bb815e121faa02746918b5da41a
+      - uses: ./
         with:
           setup-python: false
