@@ -1,0 +1,30 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # https://docs.github.com/en/actions/reference/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories
+        os:
+          - ubuntu-slim
+          - ubuntu-22.04
+          - windows-2022
+          - macos-15-intel
+          - macos-15
+    steps:
+      - name: Remove Python or Python3
+        run: |
+          set -x
+          set +e
+          rm "$(command -v python3)"
+          rm "$(command -v python)"
+        shell: bash
+
+      - uses: pzhlkj6612/forked-install-qt-action@53ffb82d713f2bb815e121faa02746918b5da41a
+        with:
+          setup-python: false
