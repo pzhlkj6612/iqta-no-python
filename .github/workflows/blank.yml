@@ -44,7 +44,7 @@ jobs:
         shell: bash
 
       - name: Remove Python or Python3 for Windows
-        if: startsWith(runner.os, 'windows-')
+        if: runner.os == 'Windows'
         run: |
           set -x
           set +e
@@ -54,7 +54,7 @@ jobs:
         shell: bash
 
       - name: Remove Python or Python3 for Unix
-        if: ${{ !startsWith(runner.os, 'windows-') }}
+        if: runner.os != 'Windows'
         run: |
           set -x
           set +e
