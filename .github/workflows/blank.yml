@@ -76,14 +76,14 @@ jobs:
               if [[ "$PY3_PATH" = '' ]]; then
                   break
               fi
-              rm -r "$PY3_PATH"
+              sudo rm -r "$PY3_PATH"
           done
           while true ; do
               PY_PATH="$(command -v python)"
               if [[ "$PY_PATH" = '' ]]; then
                   break
               fi
-              rm -r "$PY_PATH"
+              sudo rm -r "$PY_PATH"
           done
           true
 
