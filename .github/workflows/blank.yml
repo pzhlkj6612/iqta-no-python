@@ -45,23 +45,47 @@ jobs:
 
       - name: Remove Python or Python3 for Windows
         if: runner.os == 'Windows'
+        shell: bash
         run: |
           set -x
           set +e
-          rm "$(command -v python3.exe)"
-          rm "$(command -v python.exe)"
+          while true ; do
+              PY3_PATH="$(command -v python3.exe)"
+              if [[ "$PY3_PATH" = '' ]]; then
+                  break
+              fi
+              rm -r "$PY3_PATH"
+          done
+          while true ; do
+              PY_PATH="$(command -v python.exe)"
+              if [[ "$PY_PATH" = '' ]]; then
+                  break
+              fi
+              rm -r "$PY_PATH"
+          done
           true
-        shell: bash
 
       - name: Remove Python or Python3 for Unix
         if: runner.os != 'Windows'
+        shell: bash
         run: |
           set -x
           set +e
-          sudo rm -r "$(command -v python3)"
-          sudo rm -r "$(command -v python)"
+          while true ; do
+              PY3_PATH="$(command -v python3)"
+              if [[ "$PY3_PATH" = '' ]]; then
+                  break
+              fi
+              rm -r "$PY3_PATH"
+          done
+          while true ; do
+              PY_PATH="$(command -v python)"
+              if [[ "$PY_PATH" = '' ]]; then
+                  break
+              fi
+              rm -r "$PY_PATH"
+          done
           true
-        shell: bash
 
       - uses: ./
         with:
