@@ -43,12 +43,23 @@ jobs:
           git status --porcelain
         shell: bash
 
-      - name: Remove Python or Python3
+      - name: Remove Python or Python3 for Windows
+        if: ${{ startsWith(runner.os, 'windows-') }}
         run: |
           set -x
           set +e
-          sudo rm "$(command -v python3)"
-          sudo rm "$(command -v python)"
+          rm "$(command -v python3.exe)"
+          rm "$(command -v python.exe)"
+          true
+        shell: bash
+
+      - name: Remove Python or Python3 for Unix
+        if: ${{ !startsWith(runner.os, 'windows-') }}
+        run: |
+          set -x
+          set +e
+          sudo rm -r "$(command -v python3)"
+          sudo rm -r "$(command -v python)"
           true
         shell: bash
 
