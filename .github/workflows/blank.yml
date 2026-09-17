@@ -21,8 +21,9 @@ jobs:
         run: |
           set -x
           set +e
-          rm "$(command -v python3)"
-          rm "$(command -v python)"
+          sudo rm "$(command -v python3)"
+          sudo rm "$(command -v python)"
+          true
         shell: bash
 
       - uses: pzhlkj6612/forked-install-qt-action@53ffb82d713f2bb815e121faa02746918b5da41a
