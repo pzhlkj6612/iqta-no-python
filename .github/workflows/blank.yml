@@ -55,6 +55,9 @@ jobs:
                   break
               fi
               rm -r "$PY3_PATH"
+              if [[ "$?" != '0' ]]; then
+                  exit 1
+              fi
           done
           while true ; do
               PY_PATH="$(command -v python.exe)"
@@ -62,6 +65,9 @@ jobs:
                   break
               fi
               rm -r "$PY_PATH"
+              if [[ "$?" != '0' ]]; then
+                  exit 1
+              fi
           done
           true
 
@@ -77,6 +83,9 @@ jobs:
                   break
               fi
               sudo rm -r "$PY3_PATH"
+              if [[ "$?" != '0' ]]; then
+                  exit 1
+              fi
           done
           while true ; do
               PY_PATH="$(command -v python)"
@@ -84,6 +93,9 @@ jobs:
                   break
               fi
               sudo rm -r "$PY_PATH"
+              if [[ "$?" != '0' ]]; then
+                  exit 1
+              fi
           done
           true
 
